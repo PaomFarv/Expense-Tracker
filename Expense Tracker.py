@@ -53,7 +53,6 @@ class Expense:
             print(f"{i + 1}. {self.date[i]:<20}{self.description[i]:<30}{self.expenses[i]:<15}")
         print("\n")
 
-
     def del__expense(self):
         if not self.expenses:
             print("No expenses to delete.\n")
@@ -75,16 +74,25 @@ class Expense:
         del self.description[index]
         print("Expense deleted successfully.\n")
 
+    def total_expenses(self):
+        if not self.expenses:
+            print("No expenses to calculate total.\n")
+            return
+        
+        total = sum(self.expenses)
+        print(f"Total expenses: ${total:.2f}\n")
+
 app = Expense()
 
 def menu():
+        print()
         print("^" * 100)
-        print("\nWelcome to the Expense Tracker Menu !")
+        print("\nWelcome to the Expense Tracker !")
         print("Please choose an option:\n")
         print("1. Add an expense")
         print("2. View expenses")
-        print("3. Total expenses")
-        print("4. Remove an expense")
+        print("3. Remove an expense")
+        print("4. Total expenses")
         print("5. Exit\n")
         print("^" * 100)
 
@@ -97,6 +105,15 @@ while True:
 
     elif choice == "2":
         app.view_expenses()
+
+    elif choice == "3":
+        app.del__expense()
+    
+    elif choice == "4":
+        app.total_expenses()
     
     elif choice == "5":
+        print("Exiting the program. Goodbye!\n")
         break
+    else:
+        print("Invalid choice. Please enter a number between 1 and 5.\n")
