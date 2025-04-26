@@ -54,7 +54,26 @@ class Expense:
         print("\n")
 
 
-    
+    def del__expense(self):
+        if not self.expenses:
+            print("No expenses to delete.\n")
+            return
+        
+        self.view_expenses()
+        
+        while True:
+            try:
+                index = int(input("Enter the index of the expense to delete: ")) - 1
+                if index < 0 or index >= len(self.expenses):
+                    raise IndexError("Invalid index. Please enter a valid index.")
+                break
+            except (ValueError, IndexError) as e:
+                print(e)
+        
+        del self.expenses[index]
+        del self.date[index]
+        del self.description[index]
+        print("Expense deleted successfully.\n")
 
 app = Expense()
 
