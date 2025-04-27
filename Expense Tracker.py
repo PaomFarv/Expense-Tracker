@@ -134,18 +134,26 @@ class Expense:
         total = sum(self.expenses)
         print(f"Total expenses: ${total:.2f}\n")
 
+    def clear_all(self):
+        with open('expenses.csv', mode='w', newline='') as file:
+            pass
+        self.expenses.clear()
+        self.date.clear()
+        self.description.clear()
+
 app = Expense()
 
 def menu():
         print()
         print("^" * 100)
-        print("\nWelcome to the Expense Tracker !")
+        print("\nWelcome to the Expense Tracker!")
         print("Please choose an option:\n")
         print("1. Add an expense")
         print("2. View expenses")
         print("3. Remove an expense")
         print("4. Total expenses")
-        print("5. Exit\n")
+        print("5. Clear all expenses")
+        print("6. Exit\n")
         print("^" * 100)
 
 while True:
@@ -165,6 +173,10 @@ while True:
         app.total_expenses()
     
     elif choice == "5":
+        app.clear_all()
+        print("All expenses cleared successfully.\n")
+
+    elif choice == "6":
         print("Exiting the program. Goodbye!\n")
         break
     else:
