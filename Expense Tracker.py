@@ -1,5 +1,6 @@
 import csv
 import os
+from colorama import Fore
 
 class Expense:
     def __init__(self):
@@ -53,10 +54,10 @@ class Expense:
             print("No prior expenses to display.\n")
             return
         
-        elif not self.expenses:
-            print("No prior expenses to view.\n")
-            return
-        
+        self.date.clear()
+        self.description.clear()
+        self.expenses.clear()
+
         with open('expenses.csv', mode='r') as file:
             reader = csv.reader(file)
             print("\n                    << Expenses >>\n")
@@ -77,10 +78,6 @@ class Expense:
         if not os.path.exists(file_path):
             print("No prior expenses to delete.\n")
             return
-        
-        elif not self.expenses:
-            print("No prior expenses to delete.\n")
-            return
 
         self.date.clear()
         self.description.clear()
@@ -97,6 +94,10 @@ class Expense:
                 self.expenses.append(float(expense))
                 print(f"{i + 1}. {date:<20}{description:<30}{expense:<15}")
             print("\n")
+
+        if not self.expenses:
+            print("No prior expenses to delete.\n")
+            return
 
         while True:
             try:
@@ -124,9 +125,10 @@ class Expense:
             print("No prior expenses to calculate total.\n")
             return
         
+        self.expenses.clear()
+
         with open(file_path, mode='r') as file:
             reader = csv.reader(file)
-            self.expenses.clear()
             for row in reader:
                 expense = float(row[2])
                 self.expenses.append(expense)
@@ -135,8 +137,9 @@ class Expense:
         print(f"Total expenses: ${total:.2f}\n")
 
     def clear_all(self):
-        with open('expenses.csv', mode='w', newline='') as file:
-            pass
+        file_path = "expenses.csv"
+        if os.path.exists(file_path):
+            os.remove(file_path)
         self.expenses.clear()
         self.date.clear()
         self.description.clear()
@@ -144,21 +147,21 @@ class Expense:
 app = Expense()
 
 def menu():
-        print()
-        print("^" * 100)
-        print("\nWelcome to the Expense Tracker!")
-        print("Please choose an option:\n")
-        print("1. Add an expense")
-        print("2. View expenses")
-        print("3. Remove an expense")
-        print("4. Total expenses")
-        print("5. Clear all expenses")
-        print("6. Exit\n")
-        print("^" * 100)
+    print()
+    print("^" * 100)
+    print(Fore.GREEN + "\nWelcome to the Expense Tracker!")
+    print("Please choose an option:\n")
+    print("1. Add an expense")
+    print("2. View expenses")
+    print("3. Remove an expense")
+    print("4. Total expenses")
+    print("5. Clear all expenses")
+    print("6. Exit")
+    print("^" * 100)
 
 while True:
     menu()
-    choice = input("Please enter your choice (1-5): ")
+    choice = input("Please enter your choice (1-6): ")
     
     if choice == "1":
         app.add_expense()
@@ -180,4 +183,4 @@ while True:
         print("Exiting the program. Goodbye!\n")
         break
     else:
-        print("Invalid choice. Please enter a number between 1 and 5.\n")
+        print("Invalid choice. Please enter a number between 1 and 6.\n")
